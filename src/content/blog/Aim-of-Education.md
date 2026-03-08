@@ -4,7 +4,7 @@ description: "Something I wrote for my English Project — exploring the true pu
 date: 2025-10-25
 tags:
   - Opinion
-draft: false
+draft: true
 toc: true
 ---
 

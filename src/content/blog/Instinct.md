@@ -4,7 +4,7 @@ description: "Something I believe is true"
 date: 2025-12-25
 tags:
   - Opinion
-draft: false
+draft: true
 ---
 
 # Instinct -- Trust your Instinct more
