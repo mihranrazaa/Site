@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-/* ===== LIGHT MODE (default) ===== */
+/* light mode */
 @theme {
   --color-background: #fcfaea;
   --color-foreground: #3d200b;
@@ -14,25 +14,16 @@
 
   --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", "Fira Code", monospace;
 
-  /* Bump all font sizes by +1 step */
+  /* bump font size */
   --text-xs: 0.875rem;
-  /* 14px (was 12px) */
   --text-sm: 1rem;
-  /* 16px (was 14px) */
   --text-base: 1.125rem;
-  /* 18px (was 16px) */
   --text-lg: 1.25rem;
-  /* 20px (was 18px) */
   --text-xl: 1.5rem;
-  /* 24px (was 20px) */
   --text-2xl: 1.875rem;
-  /* 30px (was 24px) */
   --text-3xl: 2.25rem;
-  /* 36px (was 30px) */
   --text-4xl: 3rem;
-  /* 48px (was 36px) */
   --text-5xl: 3.75rem;
-  /* 60px (was 48px) */
 }
 
 @layer base {
@@ -58,7 +49,7 @@
     color: var(--color-foreground);
   }
 
-  /* Custom scrollbar */
+  /* scrollbar */
   ::-webkit-scrollbar {
     width: 5px;
   }
@@ -81,7 +72,7 @@
   }
 }
 
-/* ===== DARK MODE ===== */
+/* dark mode */
 .dark {
   --color-background: #3d200b;
   --color-foreground: #fcfaea;
@@ -93,7 +84,7 @@
   --color-ring: #f59e0b;
 }
 
-/* Emoji canvas background */
+/* emoji canvas bg */
 #emoji-canvas {
   position: fixed;
   inset: 0;

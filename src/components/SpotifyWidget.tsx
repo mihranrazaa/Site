@@ -25,7 +25,7 @@ export default function SpotifyWidget() {
         };
 
         fetchSpotify();
-        // Poll every 10 seconds for live updates
+        // poll 10s
         const interval = setInterval(fetchSpotify, 10000);
         return () => clearInterval(interval);
     }, []);
@@ -42,7 +42,7 @@ export default function SpotifyWidget() {
         );
     }
 
-    // Not playing anything
+
     if (!data.isPlaying) {
         return (
             <div className="flex items-center gap-3 p-3 rounded-xl border border-border/50 bg-accent/5 h-[72px]">
@@ -76,11 +76,7 @@ export default function SpotifyWidget() {
             </div>
             <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
                 <span className="text-xs font-semibold text-green-500 uppercase tracking-wider mb-0.5 flex items-center gap-1.5">
-                    <span className="relative flex h-2 w-2 shrink-0 ml-1">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                    </span>
-                    Currently Playing
+                    Currently Listening
                 </span>
                 <span className="text-sm font-medium text-foreground truncate">{data.title}</span>
                 <span className="text-xs text-muted-foreground truncate">{data.artist}</span>

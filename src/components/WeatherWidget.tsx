@@ -7,7 +7,7 @@ type WeatherData = {
     icon: JSX.Element;
 };
 
-// Map WMO weather codes to icons and descriptions
+// map wmo codes
 const getWeatherInfo = (code: number) => {
     if (code === 0) return { condition: "Clear sky", icon: <Sun className="w-5 h-5 text-yellow-500" /> };
     if (code === 1 || code === 2 || code === 3) return { condition: "Partly cloudy", icon: <Cloud className="w-5 h-5 text-gray-400" /> };
@@ -44,7 +44,7 @@ export default function WeatherWidget() {
         };
 
         fetchWeather();
-        // Refresh every 30 minutes
+        // refresh 30m
         const interval = setInterval(fetchWeather, 30 * 60 * 1000);
         return () => clearInterval(interval);
     }, []);

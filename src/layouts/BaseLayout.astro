@@ -12,11 +12,7 @@ const {
   description = "Personal portfolio and blog by mihranrazaa",
 } = Astro.props;
 
-/**
- * ═══════════════════════════════════════════════════════
- *  MOOD CONFIG — Emjois
- * ═══════════════════════════════════════════════════════
- */
+// emoji config
 ---
 
 <!doctype html>
@@ -147,7 +143,7 @@ const {
     </footer>
 
     <script>
-      // ===== MOBILE MENU =====
+      // mobile menu
       const btn = document.getElementById("mobile-menu-btn");
       const menu = document.getElementById("mobile-menu");
       const menuIcon = document.getElementById("menu-icon");
@@ -158,7 +154,7 @@ const {
         closeIcon?.classList.toggle("hidden");
       });
 
-      // ===== THEME TOGGLE =====
+      // theme toggle
       const toggle = document.getElementById("theme-toggle");
       const sunIconEl = document.getElementById("sun-icon");
       const moonIconEl = document.getElementById("moon-icon");
@@ -174,13 +170,11 @@ const {
         updateIcons();
       });
 
-      // ===== FLOATING EMOJI IMAGES =====
+      // floating emojis
       const canvas = document.getElementById("emoji-canvas") as HTMLCanvasElement;
       const ctx = canvas?.getContext("2d");
       
-      // EDIT THESE PATHS to change the floating emojis.
-      // You can add up to 6 custom image paths here.
-      // If a path doesn't exist, it will simply be skipped, keeping everything balanced!
+      // emoji paths
       const emojiPaths = [
         "/emojis/1.svg",
         "/emojis/2.svg",
@@ -202,7 +196,7 @@ const {
             checkInit();
           };
           img.onerror = () => {
-            checkInit(); // Skip failed images but don't block
+            checkInit();
           };
         });
 
@@ -214,7 +208,7 @@ const {
         }
         
         function initCanvas() {
-          if (loadedImages.length === 0) return; // No valid images found
+          if (loadedImages.length === 0) return;
           if (window.innerWidth < 768 && window.location.pathname !== "/") return;
 
           let W = window.innerWidth;
@@ -260,22 +254,22 @@ const {
               let baseVx, baseVy;
 
               if (isMobile) {
-                // Rain effect: slow downward drift + gentle random horizontal sway
+                // rain drift
                 baseVx = (Math.random() - 0.5) * 0.6;
                 baseVy = Math.random() * 0.4 + 0.3;
               } else {
-                // Desktop rain: slightly faster with wider horizontal drift
+                // desktop rain
                 baseVx = (Math.random() - 0.5) * 0.8;
                 baseVy = Math.random() * 0.5 + 0.3;
               }
               
               const scale = isMobile
-                ? Math.random() * 0.6 + 0.2   // 0.2–0.8 on mobile (wide range)
-                : Math.random() * 1.0 + 0.3;  // 0.3–1.3 on desktop (wide range)
+                ? Math.random() * 0.6 + 0.2
+                : Math.random() * 1.0 + 0.3;
 
               items.push({
                 x: Math.random() * W,
-                y: -Math.random() * H,  // stagger above viewport for rain entry
+                y: -Math.random() * H, // stagger entry
                 vx: baseVx,
                 vy: baseVy,
                 baseVx: baseVx,
@@ -296,18 +290,17 @@ const {
             ctx.clearRect(0, 0, W, H);
 
             items.forEach((item) => {
-              // Drift
               item.x += item.vx;
               item.y += item.vy;
               item.rotation += item.rotSpeed;
 
               if (isMobile) {
-                // Mobile rain: add gentle random horizontal sway over time
+                // mobile sway
                 item.vx += (Math.random() - 0.5) * 0.02;
                 item.vx = Math.max(-0.8, Math.min(0.8, item.vx));
                 item.vy = item.vy * 0.99 + item.baseVy * 0.01;
               } else {
-                // Desktop: mouse repulsion
+                // mouse repel
                 const dx = item.x - mouseX;
                 const dy = item.y - mouseY;
                 const dist = Math.sqrt(dx * dx + dy * dy);
@@ -317,7 +310,7 @@ const {
                   item.vy += (dy / dist) * force * 0.08;
                 }
 
-                // Content zone repulsion — push out from text column 
+                // content repel
                 const contentLeft = (W - 672) / 2 - 40;
                 const contentRight = (W + 672) / 2 + 40;
                 if (item.x > contentLeft && item.x < contentRight) {
@@ -326,13 +319,13 @@ const {
                   item.vx += pushDir * 0.15;
                 }
 
-                // Damping + gentle sway
+                // damping
                 item.vx += (Math.random() - 0.5) * 0.01;
                 item.vx = item.vx * 0.98 + item.baseVx * 0.02;
                 item.vy = item.vy * 0.98 + item.baseVy * 0.02;
               }
 
-              // Rain wrap: respawn at top when falling off bottom (both mobile & desktop)
+              // wrap
               if (item.y > H + 80) {
                 item.y = -80;
                 item.x = Math.random() * W;
@@ -340,17 +333,16 @@ const {
               if (item.x < -80) item.x = W + 80;
               if (item.x > W + 80) item.x = -80;
 
-              // Draw Image
               ctx.save();
               ctx.translate(item.x, item.y);
               ctx.rotate(item.rotation);
               ctx.scale(item.scale, item.scale);
               
-              // Give them lower opacity on dark mode to match the theme, slightly brighter on light
+              // theme opacity
               ctx.globalAlpha = document.documentElement.classList.contains("dark") ? item.opacity : Math.min(item.opacity + 0.2, 1);
               
               const img = loadedImages[item.imgIdx];
-              // Force draw to 40x40 to keep them uniform, scale handles variance
+              // uniform size
               const baseSize = 40;
               ctx.drawImage(img, -baseSize / 2, -baseSize / 2, baseSize, baseSize);
 
@@ -367,10 +359,8 @@ const {
             const newW = window.innerWidth;
             const newH = window.innerHeight;
 
-            // On mobile, the browser chrome (address bar, home bar) causes
-            // height-only changes. Ignore those to prevent emojis from jumping.
+            // ignore mobile chrome resize
             if (isMobile && newW === W) {
-              // Only update canvas height so it doesn't clip, but don't respawn
               H = newH;
               canvas.height = H;
               return;
@@ -380,7 +370,7 @@ const {
             H = newH;
             canvas.width = W;
             canvas.height = H;
-            spawn(); // Only respawn on actual layout changes (orientation, desktop resize)
+            spawn();
           });
         }
       }
